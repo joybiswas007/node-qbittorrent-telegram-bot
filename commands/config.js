@@ -1,5 +1,6 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+config();
+
 import { QBittorrent } from "@ctrl/qbittorrent";
 
 //Qbittorrent global config

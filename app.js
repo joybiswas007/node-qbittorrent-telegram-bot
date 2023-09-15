@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+config();
 
 import TelegramBot from "node-telegram-bot-api";
 
@@ -10,8 +10,10 @@ const bot = new TelegramBot(token, { polling: true });
 import { status } from "./commands/torrentStatus.js";
 import { mirror } from "./commands/mirrorTorrent.js";
 import { remove } from "./commands/removeTorrent.js";
+import { appInfo } from "./commands/appInfo.js";
 
 //Use command
 status(bot);
 mirror(bot);
 remove(bot);
+appInfo(bot);
