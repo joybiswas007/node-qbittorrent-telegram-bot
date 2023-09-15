@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@ctrl/qbittorrent": "^6.1.0",
+    "dotenv": "^16.3.1",
+    "node-telegram-bot-api": "^0.63.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "name": "tg-leech-bot",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
