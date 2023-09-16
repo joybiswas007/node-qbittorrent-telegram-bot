@@ -9,7 +9,7 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
-  "name": "tg-leech-bot",
+  "name": "qbit-tg",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
