@@ -33,10 +33,10 @@ To run the bot, use the following command: ``` npm run dev ```
 /pause or /p "torrentid" - pause torrent(s) require torrent it
 /resume or /rs "torrentid" - resume torrent(s) require torrent it.
 /status - this command will give you list of torrents added in your client along with other information.
-/status "torrentid" - by passing id with status command it give you detailedx information about a specific torrent from your client.
+/status "torrentid" - by passing id with status command it give you detailed information about a specific torrent from your client.
 /stats - running this comamnd give your information about the qBittorrent Api version, build info and qBitorrent version.
 
-```
+``
 ## Functionality
 Currently only adding torrents via magnet url supports. NO support for torrent file at the moment;
 
