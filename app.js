@@ -7,13 +7,13 @@ const token = process.env.BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 //Import command
+import { addTorrent } from "./commands/addTorrent.js";
+import { removeTorrent } from "./commands/removeTorrent.js";
 import { status } from "./commands/torrentStatus.js";
-import { mirror } from "./commands/mirrorTorrent.js";
-import { remove } from "./commands/removeTorrent.js";
-import { appInfo } from "./commands/appInfo.js";
+import { appStats } from "./commands/appStats.js";
 
 //Use command
+addTorrent(bot);
+removeTorrent(bot);
 status(bot);
-mirror(bot);
-remove(bot);
-appInfo(bot);
+appStats(bot);
