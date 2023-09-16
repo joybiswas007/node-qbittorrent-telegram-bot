@@ -27,13 +27,13 @@ To run the bot, use the following command: ``` npm run dev ```
 ## Available commands
 
 ```
-/add or /a "magnet url" - add torrent magnet(s)
-/remove or /rm "torrentid" - remove torrent from client without data must provide torrent id to remove torrent
-/cancel "torrentid" - remove torrent from client with data must provide torrent id to remove torrent
-/pause or /p "torrentid" - pause torrent(s) must provide torrent it
-/resume or /rs "torrentid" - resume torrent(s) must provide torrent it.
-/status - running this command will give you all list of torrents added in your client along with ids;
-/status "torrentid" - by passing id with status command it give you all the information about a specific torrent from your client.
+/add or /a "magnet url" - add torrent magnet(s).
+/remove or /rm "torrentid" - remove torrent from client without data require torrent id.
+/cancel "torrentid" - remove torrent from client with data must require torrent id
+/pause or /p "torrentid" - pause torrent(s) require torrent it
+/resume or /rs "torrentid" - resume torrent(s) require torrent it.
+/status - this command will give you list of torrents added in your client along with other information.
+/status "torrentid" - by passing id with status command it give you detailedx information about a specific torrent from your client.
 /stats - running this comamnd give your information about the qBittorrent Api version, build info and qBitorrent version.
 
 ```
