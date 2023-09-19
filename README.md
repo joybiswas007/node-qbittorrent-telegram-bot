@@ -30,12 +30,12 @@ To run the bot, use the following command: `npm run dev`
 ## Available commands
 
 ```
-Just send a .torrent file to the bot and the bot will automitacally download the torrent(s);
+Just send a .torrent file to the bot and the bot will automatically download the torrent(s);
 /magnet or /m "magnet url" - add torrent magnet(s).
 /remove "torrentid" - remove torrent from client without data require torrent id.
 /cancel "torrentid" - remove torrent from client with data must require torrent id
-/pause or /p "torrentid" - pause torrent(s) require torrent it
-/resume or /rs "torrentid" - resume torrent(s) require torrent it.
+/pause or /p "torrentid" - pause torrent(s) require torrent id;
+/resume or /rs "torrentid" - resume torrent(s) require torrent id.
 /status - this command will give you list of torrents added in your client along with other information.
 /status "torrentid" - by passing id with status command it give you detailed information about a specific torrent from your client.
 /stats - running this comamnd give your information about server and clients.
