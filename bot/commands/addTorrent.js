@@ -1,4 +1,4 @@
-import { client } from "./config.js";
+import { client } from "../config.js";
 import { Data } from "../db/dbSchema.js";
 
 export const addTorrent = (bot) => {

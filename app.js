@@ -7,12 +7,12 @@ const token = process.env.BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 //Import command
-import { addTorrent } from "./commands/addTorrent.js";
-import { removeTorrent } from "./commands/removeTorrent.js";
-import { pauseTorrent } from "./commands/pauseTorrent.js";
-import { resumeTorrent } from "./commands/resumeTorrent.js";
-import { status } from "./commands/torrentStatus.js";
-import { appStats } from "./commands/appStats.js";
+import { addTorrent } from "./bot/commands/addTorrent.js";
+import { removeTorrent } from "./bot/commands/removeTorrent.js";
+import { pauseTorrent } from "./bot/commands/pauseTorrent.js";
+import { resumeTorrent } from "./bot/commands/resumeTorrent.js";
+import { status } from "./bot/commands/torrentStatus.js";
+import { appStats } from "./bot/commands/appStats.js";
 
 //Use command
 addTorrent(bot);

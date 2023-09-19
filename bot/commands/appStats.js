@@ -1,4 +1,4 @@
-import { client } from "./config.js";
+import { client } from "../config.js";
 
 export const appStats = (bot) => {
   bot.onText(/\/stats/, async (msg) => {

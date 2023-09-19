@@ -1,4 +1,4 @@
-import { client } from "./config.js";
+import { client } from "../config.js";
 
 export const resumeTorrent = (bot) => {
   bot.onText(/\/resume|\/rs/, async (msg, match) => {

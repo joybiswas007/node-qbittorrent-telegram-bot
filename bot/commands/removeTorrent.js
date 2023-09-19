@@ -1,4 +1,4 @@
-import { client } from "./config.js";
+import { client } from "../config.js";
 import { Data } from "../db/dbSchema.js";
 
 export const removeTorrent = (bot) => {
@@ -26,7 +26,7 @@ export const removeTorrent = (bot) => {
         if (rmTor === true) {
           bot.sendMessage(
             chatID,
-            `@${username} torrent has been removed from the queue`,
+            `@${username} torrent has been removed from the client`,
             options
           );
         } else {
