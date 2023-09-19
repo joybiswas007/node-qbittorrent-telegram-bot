@@ -59,6 +59,7 @@ export const status = (bot) => {
           message += "<b>Torrents Stats: </b>\n";
           message += `Name: ${name}\n`;
           message += `id: <em>${id}</em>\n`;
+          message += `ETA: ${ms(eta)}\n`;
           message += `Completed: ${isCompleted}\n`;
           message += `Status: ${status}\n`;
           message += `State: ${state}\n`;
