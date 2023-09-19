@@ -42,3 +42,24 @@ export const osuptime = (x) => {
   const seconds = Math.floor(x % 60);
   return `${hours}h ${minutes}m ${seconds}s`;
 };
+
+//Only specified user can run the bot
+export const sudoChecker = (
+  user_id,
+  username,
+  sudo_user,
+  bot,
+  chatID,
+  options
+) => {
+  if (user_id !== sudo_user) {
+    bot.sendMessage(
+      chatID,
+      `@${username} you aren't authorized!`,
+      options || {}
+    );
+    return false;
+  }
+
+  return true;
+};

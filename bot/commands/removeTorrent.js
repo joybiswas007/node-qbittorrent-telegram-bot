@@ -1,45 +1,33 @@
-import { client } from "../config.js";
-import { Data } from "../db/dbSchema.js";
+import { client, sudoChecker } from "../config.js";
 
 export const removeTorrent = (bot) => {
-  bot.onText(/\/remove|\/rm|\/cancel/, async (msg, match) => {
+  bot.onText(/\/remove|\/cancel/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
     const user_hash = msg.text.replace(match[0], "").trim();
     const options = { reply_to_message_id: msgID };
-    const { id: userid, username } = msg.from;
+    const { id: user_id, username } = msg.from;
+    const sudo_user = parseInt(process.env.SUDO_USER);
     let rmTor;
-
-    if (match[0] === "/remove" || match[0] === "/rm") {
-      rmTor = await client.removeTorrent(user_hash, false); //only remove torrent from client
-    } else if (match[0] === "/cancel") {
-      rmTor = await client.removeTorrent(user_hash, true); //remove torrent with data;
+    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+      return;
     }
-
     try {
-      const info = await Data.findOneAndDelete({
-        user_id: userid,
-        hash: user_hash,
-      });
-
-      if (info.user_id === userid && info.hash === user_hash) {
-        if (rmTor === true) {
-          bot.sendMessage(
-            chatID,
-            `@${username} torrent has been removed from the client`,
-            options
-          );
-        } else {
-          bot.sendMessage(
-            chatID,
-            `@${username} failed to remove torrent from queue`,
-            options
-          );
-        }
+      if (match[0] === "/remove") {
+        rmTor = await client.removeTorrent(user_hash, false); //only remove torrent from client
+      } else if (match[0] === "/cancel") {
+        rmTor = await client.removeTorrent(user_hash, true); //remove torrent with data;
+      }
+      if (rmTor) {
+        bot.sendMessage(
+          chatID,
+          `@${username} torrent has been removed from the client`,
+          options
+        );
       } else {
         bot.sendMessage(
           chatID,
-          `@${username} you can't stop other peoples download(s)`,
+          `@${username} failed to remove torrent from queue`,
           options
         );
       }

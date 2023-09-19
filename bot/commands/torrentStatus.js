@@ -1,14 +1,20 @@
-import { client, size } from "../config.js";
-import ms from "ms";
+import { client, size, sudoChecker } from "../config.js";
 
 export const status = (bot) => {
   bot.onText(/\/status/, async (msg, match) => {
     const chatID = msg.chat.id;
+    const msgId = msg.message_id;
     const user_hash = msg.text.replace(match[0], "").trim();
     let message = "";
     const options = {
       parse_mode: "HTML",
+      reply_to_message_id: msgId,
     };
+    const { id: user_id, username } = msg.from;
+    const sudo_user = parseInt(process.env.SUDO_USER);
+    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+      return;
+    }
     try {
       if (user_hash) {
         const torrent_data = await client.getTorrent(user_hash);
@@ -34,7 +40,7 @@ export const status = (bot) => {
         message += `Name: ${name}\n`;
         message += `id: ${id}\n`;
         message += `State: ${state}\n`;
-        message += `ETA: ${ms(eta)}\n`;
+        message += `ETA: ${eta}\n`;
         message += `Added on: ${dateAdded}\n`;
         message += `Completed on: ${dateCompleted}\n`;
         message += `Completed: ${isCompleted}\n`;
@@ -59,7 +65,7 @@ export const status = (bot) => {
           message += "<b>Torrents Stats: </b>\n";
           message += `Name: ${name}\n`;
           message += `id: <em>${id}</em>\n`;
-          message += `ETA: ${ms(eta)}\n`;
+          message += `ETA: ${eta}\n`;
           message += `Completed: ${isCompleted}\n`;
           message += `Status: ${status}\n`;
           message += `State: ${state}\n`;

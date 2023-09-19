@@ -1,4 +1,4 @@
-import { client, osuptime, size } from "../config.js";
+import { client, osuptime, size, sudoChecker } from "../config.js";
 import os from "os";
 import checkDiskSpace from "check-disk-space";
 
@@ -8,6 +8,11 @@ export const serverStats = (bot) => {
     const msgID = msg.message_id;
     const options = { parse_mode: "HTML", reply_to_message_id: msgID };
     let message = "";
+    const { id: user_id, username } = msg.from;
+    const sudo_user = parseInt(process.env.SUDO_USER);
+    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+      return;
+    }
     try {
       const hddStorage = await checkDiskSpace(process.env.DISK_PATH);
       message += `Uptime: ${osuptime(os.uptime())}\n`;
