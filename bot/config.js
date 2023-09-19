@@ -13,7 +13,7 @@ export const client = new QBittorrent({
 
 //Display data in MiB or GiB depends on the size
 
-export const torrent_size = (x) => {
+export const size = (x) => {
   const units = [
     "bytes",
     "KiB",
@@ -32,4 +32,13 @@ export const torrent_size = (x) => {
     n = n / 1024;
   }
   return n.toFixed(n < 10 && l > 0 ? 1 : 0) + " " + units[l];
+};
+
+//Display OS uptime
+
+export const osuptime = (x) => {
+  const hours = Math.floor(x / 3600);
+  const minutes = Math.floor((x % 3600) / 60);
+  const seconds = Math.floor(x % 60);
+  return `${hours}h ${minutes}m ${seconds}s`;
 };

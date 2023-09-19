@@ -20,6 +20,7 @@ QBIT_WEBUI_URL=http:(s)//your-qbit-webui-link //Enter the qBittorrent webui url
 USERNAME=USERNAME //login username
 PASSWORD=PASSWORD //login password
 MONGODB_URI=ENTERMOGODBURL //Enter mongodb connection url
+DISK_PATH="/home/downloads" // Location of your downloaded files;
 ```
 
 ## Usage

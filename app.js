@@ -12,7 +12,7 @@ import { removeTorrent } from "./bot/commands/removeTorrent.js";
 import { pauseTorrent } from "./bot/commands/pauseTorrent.js";
 import { resumeTorrent } from "./bot/commands/resumeTorrent.js";
 import { status } from "./bot/commands/torrentStatus.js";
-import { appStats } from "./bot/commands/appStats.js";
+import { serverStats } from "./bot/commands/serverStats.js";
 
 //Use command
 addTorrent(bot);
@@ -20,4 +20,4 @@ removeTorrent(bot);
 pauseTorrent(bot);
 resumeTorrent(bot);
 status(bot);
-appStats(bot);
+serverStats(bot);

@@ -1,17 +1,25 @@
-import { client } from "../config.js";
+import { client, osuptime, size } from "../config.js";
+import os from "os";
+import checkDiskSpace from "check-disk-space";
 
-export const appStats = (bot) => {
+export const serverStats = (bot) => {
   bot.onText(/\/stats/, async (msg) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
     const options = { parse_mode: "HTML", reply_to_message_id: msgID };
     let message = "";
     try {
+      const hddStorage = await checkDiskSpace(process.env.DISK_PATH);
+      message += `Uptime: ${osuptime(os.uptime())}\n`;
+      message += `Disk: free ${size(hddStorage.free)} / ${size(
+        hddStorage.size
+      )}\n`;
+      message += `RAM: free ${size(os.freemem())} / ${size(os.totalmem())}\n`;
       const apiInfo = await client.getApiVersion();
       message += `Api v${apiInfo}\n`;
 
       const appVersion = await client.getAppVersion();
-      message += `qBittorrent ${appVersion}\n\n`;
+      message += `Client: qBittorrent ${appVersion}\n\n`;
 
       const buildInfo = await client.getBuildInfo();
       message += "<b>Build info:\n</b>";
@@ -22,7 +30,7 @@ export const appStats = (bot) => {
       message += `qt: ${buildInfo.qt}\n`;
       message += `zlib: ${buildInfo.zlib}\n`;
 
-      bot.sendMessage(chatID, `<b>App stats:</b>\n${message}`, options);
+      bot.sendMessage(chatID, `<b>Server stats:</b>\n${message}`, options);
     } catch (error) {
       bot.sendMessage(chatID, `${error}`, options);
     }

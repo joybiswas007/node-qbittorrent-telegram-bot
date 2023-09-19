@@ -1,4 +1,4 @@
-import { client, torrent_size } from "../config.js";
+import { client, size } from "../config.js";
 import ms from "ms";
 
 export const status = (bot) => {
@@ -38,18 +38,18 @@ export const status = (bot) => {
         message += `Added on: ${dateAdded}\n`;
         message += `Completed on: ${dateCompleted}\n`;
         message += `Completed: ${isCompleted}\n`;
-        message += `Download speed: ${torrent_size(downloadSpeed)}\n`;
-        message += `Upload speed: ${torrent_size(uploadSpeed)}\n`;
-        message += `Downloaded: ${torrent_size(totalDownloaded)}\n`;
-        message += `Left amount: ${torrent_size(amount_left)}\n`;
-        message += `Uploaded: ${torrent_size(totalUploaded)}\n`;
+        message += `Download speed: ${size(downloadSpeed)}\n`;
+        message += `Upload speed: ${size(uploadSpeed)}\n`;
+        message += `Downloaded: ${size(totalDownloaded)}\n`;
+        message += `Left amount: ${size(amount_left)}\n`;
+        message += `Uploaded: ${size(totalUploaded)}\n`;
         message += `Queue position: ${queuePosition}\n`;
         message += `Seeders: ${num_seeds}\n`;
         message += `Leechers: ${num_leechs}\n`;
         message += `Connected seeds: ${connectedSeeds}\n`;
         message += `Total peers: ${totalPeers}\n`;
         message += `Content Path: ${content_path}\n`;
-        message += `Size: ${torrent_size(total_size)}\n`;
+        message += `Size: ${size(total_size)}\n`;
       } else {
         //if user does't give any id then lists all torrents
         const data = await client.getAllData();
@@ -64,7 +64,7 @@ export const status = (bot) => {
           message += `Status: ${status}\n`;
           message += `State: ${state}\n`;
           message += `Content Path: ${content_path}\n`;
-          message += `Size: ${torrent_size(total_size)}\n\n`;
+          message += `Size: ${size(total_size)}\n\n`;
         });
       }
       bot.sendMessage(chatID, message || "No jobs in queue!", options);
