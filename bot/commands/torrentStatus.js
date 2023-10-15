@@ -38,7 +38,7 @@ export const status = (bot) => {
           torrent_data.raw;
         message += "<b>Torrent stats: </b>\n";
         message += `Name: ${name}\n`;
-        message += `id: ${id}\n`;
+        message += `id: <code>${id}</code>\n`;
         message += `State: ${state}\n`;
         message += `ETA: ${eta}\n`;
         message += `Added on: ${dateAdded}\n`;
@@ -64,7 +64,7 @@ export const status = (bot) => {
           const { state, total_size, content_path } = torrent.raw;
           message += "<b>Torrents Stats: </b>\n";
           message += `Name: ${name}\n`;
-          message += `id: <em>${id}</em>\n`;
+          message += `id: <code>${id}</code>\n`;
           message += `ETA: ${eta}\n`;
           message += `Completed: ${isCompleted}\n`;
           message += `Status: ${status}\n`;

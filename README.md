@@ -17,8 +17,8 @@ Example `.env` file:
 ```
 BOT_TOKEN=123456:ABCDEFGHJIKHLF //Grab your telegram bot token from BotFather
 QBIT_WEBUI_URL=http:(s)//your-qbit-webui-link //Enter the qBittorrent webui url
-USERNAME=USERNAME //login username
-PASSWORD=PASSWORD //login password
+USERNAME=USERNAME //Qbit webui login username
+PASSWORD=PASSWORD //qbit webui login password
 SUDO_USER=TELGRAM_USER_ID // grab your userid from this bot @userinfobot.
 DISK_PATH="/home/downloads" // Location of your downloaded files;
 ```
