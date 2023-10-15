@@ -14,25 +14,25 @@ export const pauseTorrent = (bot) => {
     try {
       const pause_torrent = await client.pauseTorrent(torrent_hash);
       if (!torrent_hash) {
-        bot.sendMessage(
+        return bot.sendMessage(
           chatID,
           "Must provide torrent id to pause torrent.",
           options
         );
+      }
+
+      if (pause_torrent === true) {
+        bot.sendMessage(
+          chatID,
+          `@${msg.from.username} torrent has been paused`,
+          options
+        );
       } else {
-        if (pause_torrent === true) {
-          bot.sendMessage(
-            chatID,
-            `@${msg.from.username} torrent has been paused`,
-            options
-          );
-        } else {
-          bot.sendMessage(
-            chatID,
-            `@${msg.from.username} failed to pause torrent`,
-            options
-          );
-        }
+        bot.sendMessage(
+          chatID,
+          `@${msg.from.username} failed to pause torrent`,
+          options
+        );
       }
     } catch (error) {
       bot.sendMessage(chatID, `${error}`);

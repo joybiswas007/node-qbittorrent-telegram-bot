@@ -14,25 +14,25 @@ export const resumeTorrent = (bot) => {
     try {
       const resume_torrent = await client.resumeTorrent(torrent_hash);
       if (!torrent_hash) {
-        bot.sendMessage(
+        return bot.sendMessage(
           chatID,
           "Must provide torrent id to resume torrent.",
           options
         );
+      }
+
+      if (resume_torrent === true) {
+        bot.sendMessage(
+          chatID,
+          `@${msg.from.username} torrent has been resumed`,
+          options
+        );
       } else {
-        if (resume_torrent === true) {
-          bot.sendMessage(
-            chatID,
-            `@${msg.from.username} torrent has been resumed`,
-            options
-          );
-        } else {
-          bot.sendMessage(
-            chatID,
-            `@${msg.from.username} failed to resume torrent`,
-            options
-          );
-        }
+        bot.sendMessage(
+          chatID,
+          `@${msg.from.username} failed to resume torrent`,
+          options
+        );
       }
     } catch (error) {
       bot.sendMessage(chatID, `${error}`);

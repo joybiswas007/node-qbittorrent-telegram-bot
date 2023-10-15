@@ -13,6 +13,13 @@ export const removeTorrent = (bot) => {
       return;
     }
     try {
+      if (!user_hash) {
+        return bot.sendMessage(
+          chatID,
+          "Must provide torrent id to remove torrent.",
+          options
+        );
+      }
       if (match[0] === "/remove") {
         rmTor = await client.removeTorrent(user_hash, false); //only remove torrent from client
       } else if (match[0] === "/cancel") {
@@ -21,13 +28,13 @@ export const removeTorrent = (bot) => {
       if (rmTor) {
         bot.sendMessage(
           chatID,
-          `@${username} torrent has been removed from the client`,
+          `@${username} torrent has been removed from the queue.`,
           options
         );
       } else {
         bot.sendMessage(
           chatID,
-          `@${username} failed to remove torrent from queue`,
+          `@${username} failed to remove torrent from queue.`,
           options
         );
       }

@@ -12,6 +12,13 @@ export const addMagnet = (bot) => {
       if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
         return;
       }
+      if (magnet.length === 0) {
+        return bot.sendMessage(
+          chatID,
+          "Kindly provide a magnet link.",
+          options
+        );
+      }
       const addMagnet = await client.addMagnet(magnet, {});
       if (addMagnet) {
         bot.sendMessage(

@@ -7,8 +7,8 @@ import { QBittorrent } from "@ctrl/qbittorrent";
 
 export const client = new QBittorrent({
   baseUrl: process.env.QBIT_WEBUI_URL,
-  username: process.env.USERNAME,
-  password: process.env.PASSWORD,
+  username: process.env.QBIT_USERNAME,
+  password: process.env.QBIT_PASSWORD,
 });
 
 //Display data in MiB or GiB depends on the size
