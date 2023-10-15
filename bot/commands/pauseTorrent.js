@@ -1,7 +1,7 @@
 import { client, sudoChecker } from "../config.js";
 
 export const pauseTorrent = (bot) => {
-  bot.onText(/\/pause|\/p/, async (msg, match) => {
+  bot.onText(/\/pause/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
     const { id: user_id, username } = msg.from;
@@ -12,7 +12,6 @@ export const pauseTorrent = (bot) => {
       return;
     }
     try {
-      const pause_torrent = await client.pauseTorrent(torrent_hash);
       if (!torrent_hash) {
         return bot.sendMessage(
           chatID,
@@ -20,6 +19,8 @@ export const pauseTorrent = (bot) => {
           options
         );
       }
+
+      const pause_torrent = await client.pauseTorrent(torrent_hash);
 
       if (pause_torrent === true) {
         bot.sendMessage(
