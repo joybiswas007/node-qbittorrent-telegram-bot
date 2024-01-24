@@ -1,19 +1,19 @@
-import { client, sudoChecker } from "../config.js";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
 
-export const removeTorrent = (bot) => {
+const removeTorrent = (bot, sudoUser) => {
   bot.onText(/\/remove|\/cancel/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
-    const user_hash = msg.text.replace(match[0], "").trim();
+    const userHash = msg.text.replace(match[0], "").trim();
     const options = { reply_to_message_id: msgID };
-    const { id: user_id, username } = msg.from;
-    const sudo_user = parseInt(process.env.SUDO_USER);
+    const { id: userId, username } = msg.from;
     let rmTor;
-    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+    if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
       return;
     }
     try {
-      if (!user_hash) {
+      if (!userHash) {
         return bot.sendMessage(
           chatID,
           "Must provide torrent id to remove torrent.",
@@ -21,9 +21,9 @@ export const removeTorrent = (bot) => {
         );
       }
       if (match[0] === "/remove") {
-        rmTor = await client.removeTorrent(user_hash, false); //only remove torrent from client
+        rmTor = await client.removeTorrent(userHash, false); // only remove torrent from client
       } else if (match[0] === "/cancel") {
-        rmTor = await client.removeTorrent(user_hash, true); //remove torrent with data;
+        rmTor = await client.removeTorrent(userHash, true); // remove torrent with data;
       }
       if (rmTor) {
         bot.sendMessage(
@@ -43,3 +43,5 @@ export const removeTorrent = (bot) => {
     }
   });
 };
+
+export default removeTorrent;

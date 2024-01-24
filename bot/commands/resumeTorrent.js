@@ -1,19 +1,19 @@
-import { client, sudoChecker } from "../config.js";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
 
-export const resumeTorrent = (bot) => {
+const resumeTorrent = (bot, sudoUser) => {
   bot.onText(/\/resume|\/rs/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
     const options = { reply_to_message_id: msgID };
-    const torrent_hash = msg.text.replace(match[0], "").trim();
-    const { id: user_id, username } = msg.from;
-    const sudo_user = parseInt(process.env.SUDO_USER);
-    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+    const torrentHash = msg.text.replace(match[0], "").trim();
+    const { id: userId, username } = msg.from;
+    if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
       return;
     }
     try {
-      const resume_torrent = await client.resumeTorrent(torrent_hash);
-      if (!torrent_hash) {
+      const resumeTorrentWithHash = await client.resumeTorrent(torrentHash);
+      if (!torrentHash) {
         return bot.sendMessage(
           chatID,
           "Must provide torrent id to resume torrent.",
@@ -21,7 +21,7 @@ export const resumeTorrent = (bot) => {
         );
       }
 
-      if (resume_torrent === true) {
+      if (resumeTorrentWithHash) {
         bot.sendMessage(
           chatID,
           `@${msg.from.username} torrent has been resumed`,
@@ -39,3 +39,5 @@ export const resumeTorrent = (bot) => {
     }
   });
 };
+
+export default resumeTorrent;

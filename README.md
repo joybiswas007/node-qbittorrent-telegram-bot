@@ -25,7 +25,7 @@ DISK_PATH=/home/downloads // Location of your downloaded files;
 
 ## Usage
 
-To run the bot, use the following command: `npm run dev`
+To run the bot, use the following command: `npm run start` or `npm run dev`
 
 ## Available commands
 

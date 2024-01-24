@@ -1,21 +1,21 @@
-import { client, sudoChecker } from "../config.js";
 import fs from "fs";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
 
-export const addTorrentFile = (bot) => {
+const addTorrentFile = (bot, sudoUser) => {
   bot.on("document", async (torrent) => {
     const { id: chatID } = torrent.chat;
-    const { id: user_id, username } = torrent.from;
+    const { id: userId, username } = torrent.from;
     const msgId = torrent.message_id;
     const options = { reply_to_message_id: msgId };
     const torrentsDir = "./torrents";
-    const { file_id: fileId, file_name } = torrent.document;
-    const sudo_user = parseInt(process.env.SUDO_USER);
-    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+    const { file_id: fileId, fileName } = torrent.document;
+    if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
       return;
     }
     try {
-      //check for filetypes if not .torrent files then sends user a message
-      if (!/\.torrent$/i.test(file_name)) {
+      // check for filetypes if not .torrent files then sends user a message
+      if (!/\.torrent$/i.test(fileName)) {
         return bot.sendMessage(
           chatID,
           "Invalid .torrent file. Try again!",
@@ -23,13 +23,13 @@ export const addTorrentFile = (bot) => {
         );
       }
 
-      //Check if download directory exists if NOT then create it
+      // Check if download directory exists if NOT then create it
       if (!fs.existsSync(torrentsDir)) {
         fs.mkdirSync(torrentsDir);
       }
 
-      const torrent_file = await bot.downloadFile(fileId, torrentsDir, {});
-      const addTorrent = await client.addTorrent(torrent_file, {});
+      const torrentFile = await bot.downloadFile(fileId, torrentsDir, {});
+      const addTorrent = await client.addTorrent(torrentFile, {});
 
       if (addTorrent) {
         bot.sendMessage(
@@ -38,9 +38,11 @@ export const addTorrentFile = (bot) => {
           options
         );
       }
-      fs.unlinkSync(torrent_file);
+      fs.unlinkSync(torrentFile);
     } catch (error) {
       bot.sendMessage(chatID, `${error}`, options);
     }
   });
 };
+
+export default addTorrentFile;

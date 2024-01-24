@@ -1,23 +1,24 @@
-import { client, size, sudoChecker } from "../config.js";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
+import size from "../utils/displaySize.js";
 
-export const status = (bot) => {
+const torrentStatus = (bot, sudoUser) => {
   bot.onText(/\/status/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgId = msg.message_id;
-    const user_hash = msg.text.replace(match[0], "").trim();
+    const userHash = msg.text.replace(match[0], "").trim();
     let message = "";
     const options = {
       parse_mode: "HTML",
       reply_to_message_id: msgId,
     };
-    const { id: user_id, username } = msg.from;
-    const sudo_user = parseInt(process.env.SUDO_USER);
-    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+    const { id: userId, username } = msg.from;
+    if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
       return;
     }
     try {
-      if (user_hash) {
-        const torrent_data = await client.getTorrent(user_hash);
+      if (userHash) {
+        const torrentData = await client.getTorrent(userHash);
         const {
           name,
           id,
@@ -33,9 +34,14 @@ export const status = (bot) => {
           queuePosition,
           connectedSeeds,
           totalPeers,
-        } = torrent_data;
-        const { amount_left, num_seeds, num_leechs, total_size, content_path } =
-          torrent_data.raw;
+        } = torrentData;
+        const {
+          amount_left: amountLeft,
+          num_seeds: seeds,
+          num_leechs: leechs,
+          total_size: totalSize,
+          content_path: contentPath,
+        } = torrentData.raw;
         message += "<b>Torrent stats: </b>\n";
         message += `Name: ${name}\n`;
         message += `id: <code>${id}</code>\n`;
@@ -47,21 +53,26 @@ export const status = (bot) => {
         message += `Download speed: ${size(downloadSpeed)}\n`;
         message += `Upload speed: ${size(uploadSpeed)}\n`;
         message += `Downloaded: ${size(totalDownloaded)}\n`;
-        message += `Left amount: ${size(amount_left)}\n`;
+        message += `Left amount: ${size(amountLeft)}\n`;
         message += `Uploaded: ${size(totalUploaded)}\n`;
         message += `Queue position: ${queuePosition}\n`;
-        message += `Seeders: ${num_seeds}\n`;
-        message += `Leechers: ${num_leechs}\n`;
+        message += `Seeders: ${seeds}\n`;
+        message += `Leechers: ${leechs}\n`;
         message += `Connected seeds: ${connectedSeeds}\n`;
         message += `Total peers: ${totalPeers}\n`;
-        message += `Content Path: ${content_path}\n`;
-        message += `Size: ${size(total_size)}\n`;
+        message += `Content Path: ${contentPath}\n`;
+        message += `Size: ${size(totalSize)}\n`;
       } else {
-        //if user does't give any id then lists all torrents
+        // if user does't give any id then lists all torrents
+
         const data = await client.getAllData();
         data.torrents.map((torrent) => {
           const { name, id, isCompleted, state: status, eta } = torrent;
-          const { state, total_size, content_path } = torrent.raw;
+          const {
+            state,
+            total_size: totalSize,
+            content_path: contentPath,
+          } = torrent.raw;
           message += "<b>Torrents Stats: </b>\n";
           message += `Name: ${name}\n`;
           message += `id: <code>${id}</code>\n`;
@@ -69,8 +80,8 @@ export const status = (bot) => {
           message += `Completed: ${isCompleted}\n`;
           message += `Status: ${status}\n`;
           message += `State: ${state}\n`;
-          message += `Content Path: ${content_path}\n`;
-          message += `Size: ${size(total_size)}\n\n`;
+          message += `Content Path: ${contentPath}\n`;
+          message += `Size: ${size(totalSize)}\n\n`;
         });
       }
       bot.sendMessage(chatID, message || "No jobs in queue!", options);
@@ -79,3 +90,5 @@ export const status = (bot) => {
     }
   });
 };
+
+export default torrentStatus;

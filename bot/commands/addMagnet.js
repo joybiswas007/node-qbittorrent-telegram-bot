@@ -1,15 +1,15 @@
-import { client, sudoChecker } from "../config.js";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
 
-export const addMagnet = (bot) => {
+const addMagnet = (bot, sudoUser) => {
   bot.onText(/\/magnet|\/m/, async (msg, match) => {
     const chatID = msg.chat.id;
     const magnet = msg.text.replace(match[0], "").trim();
-    const { id: user_id, username } = msg.from;
+    const { id: userId, username } = msg.from;
     const msgID = msg.message_id;
     const options = { reply_to_message_id: msgID };
-    const sudo_user = parseInt(process.env.SUDO_USER);
     try {
-      if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+      if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
         return;
       }
       if (magnet.length === 0) {
@@ -19,8 +19,8 @@ export const addMagnet = (bot) => {
           options
         );
       }
-      const addMagnet = await client.addMagnet(magnet, {});
-      if (addMagnet) {
+      const addMagnetLink = await client.addMagnet(magnet, {});
+      if (addMagnetLink) {
         bot.sendMessage(
           chatID,
           `@${username} your torrent has been added to queue!`,
@@ -32,3 +32,5 @@ export const addMagnet = (bot) => {
     }
   });
 };
+
+export default addMagnet;

@@ -1,18 +1,18 @@
-import { client, sudoChecker } from "../config.js";
+import client from "../config/qbitConfig.js";
+import sudoChecker from "../utils/sudoChecker.js";
 
-export const pauseTorrent = (bot) => {
+const pauseTorrent = (bot, sudoUser) => {
   bot.onText(/\/pause/, async (msg, match) => {
     const chatID = msg.chat.id;
     const msgID = msg.message_id;
-    const { id: user_id, username } = msg.from;
+    const { id: userId, username } = msg.from;
     const options = { reply_to_message_id: msgID };
-    const torrent_hash = msg.text.replace(match[0], "").trim();
-    const sudo_user = parseInt(process.env.SUDO_USER);
-    if (!sudoChecker(user_id, username, sudo_user, bot, chatID, options)) {
+    const torrentHash = msg.text.replace(match[0], "").trim();
+    if (!sudoChecker(userId, username, sudoUser, bot, chatID, options)) {
       return;
     }
     try {
-      if (!torrent_hash) {
+      if (!torrentHash) {
         return bot.sendMessage(
           chatID,
           "Must provide torrent id to pause torrent.",
@@ -20,9 +20,9 @@ export const pauseTorrent = (bot) => {
         );
       }
 
-      const pause_torrent = await client.pauseTorrent(torrent_hash);
+      const pauseTorrentWithHash = await client.pauseTorrent(torrentHash);
 
-      if (pause_torrent === true) {
+      if (pauseTorrentWithHash) {
         bot.sendMessage(
           chatID,
           `@${msg.from.username} torrent has been paused`,
@@ -40,3 +40,5 @@ export const pauseTorrent = (bot) => {
     }
   });
 };
+
+export default pauseTorrent;
