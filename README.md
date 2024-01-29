@@ -15,13 +15,17 @@ Create a `.env` file inside the directory and fill in all the details.
 Example `.env` file:
 
 ```
-BOT_TOKEN=123456:ABCDEFGHJIKHLF //Grab your telegram bot token from BotFather
-QBIT_WEBUI_URL=http:(s)//your-qbit-webui-link //Enter the qBittorrent webui url
-QBIT_USERNAME=USERNAME //Qbit webui login username
-QBIT_PASSWORD=PASSWORD //qbit webui login password
-SUDO_USER=TELGRAM_USER_ID // grab your userid from this bot @userinfobot.
-DISK_PATH=/home/downloads // Location of your downloaded files;
+BOT_TOKEN=123456:ABCDEFGHJIKHLF 
+QBIT_WEBUI_URL=Qbitwebuiurl
+QBIT_USERNAME=USERNAME 
+QBIT_PASSWORD=PASSWORD
+SUDO_USER=TELGRAM_USER_ID 
+DISK_PATH=/home/downloads
 ```
+Grab your telegram bot token from BotFather
+your-qbit-webui-link //Enter the qBittorrent webui url
+grab your userid from this bot @userinfobot
+Location of your downloaded files;
 
 ## Usage
 
